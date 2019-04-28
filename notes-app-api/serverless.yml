@@ -60,3 +60,41 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+
+  list:
+    # Defines an HTTP API endpoint that calls the main function in list.js
+    # - path: url path is /alit-notes
+    # - method: GET request
+    handler: list.main
+    events:
+      - http:
+          path: alit-notes
+          method: get
+          cors: true
+          authorizer: aws_iam 
+
+  update:
+    # Defines an HTTP API endpoint that calls the main function in list.js
+    # - path: url path is /alit-notes
+    # - method: PUT request
+    handler: update.main
+    events:
+      - http:
+          path: alit-notes/{id}
+          method: put
+          cors: true
+          authorizer: aws_iam
+
+  delete:
+    handler: delete.main
+    events:
+      - http:
+          path: alit-notes/{id}
+          method: delete
+          cors: true
+          authorizer: aws_iam
+
+# Create our resources with separate CloudFormation templates
+resources:
+  # API Gateway Errors
+  - ${file(resources/api-gateway-errors.yml)}
